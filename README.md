@@ -20,6 +20,7 @@ O projeto "Trees Everywhere" visa criar uma plataforma onde os usuários podem r
 
 🚀 **Acessar o Aplicativo:**
    - Backend: [http://localhost:8000/](http://localhost:8000/)
+   - API: [http://127.0.0.1:8000/trees/api/planted-trees/](http://127.0.0.1:8000/trees/api/planted-trees/)
 
 ## Contribuindo
 
