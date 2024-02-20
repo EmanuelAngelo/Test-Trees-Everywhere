@@ -70,28 +70,25 @@ class PlantedTree(models.Model):
         return reverse('trees:planted_tree_detail', args=[self.publish.year, self.publish.month, self.publish.day, self.slug])
 
     def clean(self):
-        self.title = self.tree.name  # Atualiza o título com o nome da árvore selecionada
+        self.title = self.tree.name
 
 class UserExtension(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Adicione outros campos conforme necessário
 
     def plant_tree(self, tree, latitude, longitude):
-        # Lógica para plantar uma árvore em um local específico
         PlantedTree.objects.create(
             user=self.user,
             account=self.user.profile.account,
             tree=tree,
-            age=1,  # Exemplo, você pode ajustar isso conforme necessário
-            publish=timezone.now(),  # Publicar imediatamente
+            age=1,
+            publish=timezone.now(),
             planted_at=timezone.now(),
             location_latitude=latitude,
             location_longitude=longitude,
-            slug=f"{tree.name}-{timezone.now().strftime('%Y-%m-%d-%H-%M-%S')}",  # Gere um slug exclusivo
-            status='published'  # Por padrão, estamos publicando a árvore imediatamente
+            slug=f"{tree.name}-{timezone.now().strftime('%Y-%m-%d-%H-%M-%S')}",
+            status='published'
         )
 
     def plant_trees(self, tree_coordinates):
-        # Lógica para plantar várias árvores de uma vez
         for tree, latitude, longitude in tree_coordinates:
             self.plant_tree(tree, latitude, longitude)
