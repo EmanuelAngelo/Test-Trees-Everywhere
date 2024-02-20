@@ -1,4 +1,3 @@
-# No arquivo urls.py do seu aplicativo 'trees'
 from django.urls import path
 from . import views
 

@@ -32,7 +32,6 @@ def user_login(request):
     return render(request, 'account/login.html', {'form': form})
 
 
-#testando
 @login_required
 def planted_tree_list(request):
   user = request.user
