@@ -1,0 +1,20 @@
+{% extends 'tree/base.html' %}
+
+{% block title %}Minhas Arvores{% endblock %}
+
+{% block content %}
+<h1>Arvores</h1>
+
+{% for post in posts %}
+<h2>
+  <a href="{{ post.get_absolute_url }}">
+    {{ post.title }}
+  </a>
+</h2>
+<p class="date">
+  Data do plantio {{ post.publish }} por {{ post.account }}
+</p>
+{{ post.body|truncatewords:30|linebreaks }}
+{% endfor %}
+
+{% endblock content %}

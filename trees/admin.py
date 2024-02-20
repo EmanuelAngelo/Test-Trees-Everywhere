@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.text import slugify
 from .models import Account, Profile, Tree, PlantedTree
 
 
@@ -23,5 +24,6 @@ class TreeAdmin(admin.ModelAdmin):
 @admin.register(PlantedTree)
 class PlantedTreeAdmin(admin.ModelAdmin):
   list_display = ('user','account','age','tree','location_latitude',
-                  'location_longitude',)
+                  'location_longitude', 'slug', 'status')
   list_filter  = ('user','planted_at')
+  prepopulated_fields = {'slug':('title',)}

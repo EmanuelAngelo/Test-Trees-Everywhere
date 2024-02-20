@@ -7,13 +7,8 @@ from .forms import PlantedTreeForm
 
 @login_required
 def dashboard(request):
-    # Lógica para obter dados relacionados ao usuário ou realizar outras operações necessárias
-    # Aqui você pode acessar dados do usuário atualmente autenticado usando request.user
-
-    # Por exemplo, você pode querer buscar dados relacionados ao usuário ou executar outras operações
     user_planted_trees = request.user.plantedtree_set.all()
 
-    # Agora você pode passar esses dados para o template
     context = {
         'user_planted_trees': user_planted_trees,
     }
@@ -49,3 +44,19 @@ def add_planted_tree(request):
     form = PlantedTreeForm()
   return render(request, 'add_planted_tree.html', {'form': form})
 
+#testando
+@login_required
+def planted_tree_list(request):
+  posts = PlantedTree.published.all()
+  return render(request,
+                'tree/post/list.html',
+                {'posts':posts})
+
+
+def planted_tree_detail(request, year, month, day, post):
+  post = get_object_or_404(PlantedTree, slug=post,
+                           status='published',
+                           publish__year=year,
+                           publish__month=month,
+                           publish__day=day)
+  return render(request, 'tree/post/detail.html', {'post':post})

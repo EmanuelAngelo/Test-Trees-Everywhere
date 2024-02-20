@@ -6,16 +6,16 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <h2>Welcome to Your Dashboard</h2>
-    <p>This is your dashboard where you can view your planted trees and other information.</p>
+    <h2>Bem vindo ao seu Dashboard</h2>
+    <p>Este é o seu painel onde você pode visualizar suas árvores plantadas e outras informações</p>
 
     <!-- Exemplo: Exibindo as árvores plantadas pelo usuário -->
-    <h3>Your Planted Trees</h3>
+    <h3>Suas árvores plantadas</h3>
     <ul>
         {% for planted_tree in user_planted_trees %}
-            <li>{{ planted_tree.tree.name }} - Planted at {{ planted_tree.planted_at }}</li>
+            <li>{{ planted_tree.tree.name }} - Plantado em {{ planted_tree.planted_at }}</li>
         {% empty %}
-            <li>No trees planted yet</li>
+            <li>Nenhuma árvore plantada ainda</li>
         {% endfor %}
     </ul>
 </body>
