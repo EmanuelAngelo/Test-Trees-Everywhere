@@ -1,13 +1,34 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>{% block title %}Login{% endblock  %}</title>
+  <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <style>
+    .login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  {% block content %}
+  <h1>Login</h1>
+  <p>Por favor, use o formulario para fazer login:</p>
+  <div class="login">
+      <form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Log in"></p>
+  </form>
+  </div>
+  {% endblock content %}
+</body>
+</html>
 
-{% block title %}Login{% endblock title %}
 
-{% block content %}
-<h1>Login</h1>
-<p>Por favor, use o formulario para fazer login:</p>
-<form method="post">
-  {{ form.as_p }}
-  {% csrf_token %}
-  <p><input type="submit" value="Log in"></p>
-</form>
-{% endblock content %}

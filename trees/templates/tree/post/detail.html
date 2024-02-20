@@ -5,6 +5,7 @@
 {% block content %}
 <h1>{{ post.title }}</h1>
 {{ post.body|linebreaks }}
+<h5>Idade da arvore: {{ post.age }} anos.</h5>
 <p class="date">
   Plantio feito {{ post.publish }} por {{ post.account }}
 </p>

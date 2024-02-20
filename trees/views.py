@@ -35,7 +35,8 @@ def user_login(request):
 #testando
 @login_required
 def planted_tree_list(request):
-  object_list = PlantedTree.published.all()
+  user = request.user
+  object_list = PlantedTree.objects.filter(user=user)
   paginator = Paginator(object_list, 4)
   page = request.GET.get('page')
   try:
@@ -48,7 +49,7 @@ def planted_tree_list(request):
                 'tree/post/list.html',
                 {'page':page, 'posts':posts})
 
-
+@login_required
 def planted_tree_detail(request, id, year, month, day, post):
     try:
         post = PlantedTree.objects.filter(
