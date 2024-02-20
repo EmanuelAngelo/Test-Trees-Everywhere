@@ -56,10 +56,11 @@ def planted_tree_list(request):
                 {'posts':posts})
 
 
-def planted_tree_detail(request, year, month, day, post):
+def planted_tree_detail(request, id, year, month, day, post):
     try:
         post = PlantedTree.objects.filter(
             slug=post,
+            id=id,
             status='published',
             publish__year=year,
             publish__month=month,

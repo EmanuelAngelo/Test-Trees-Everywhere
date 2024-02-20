@@ -4,8 +4,8 @@
 
 {% block content %}
 <h1>{{ post.title }}</h1>
+{{ post.body|linebreaks }}
 <p class="date">
   Plantio feito {{ post.publish }} por {{ post.account }}
 </p>
-{{ post.body|linebreaks }}
 {% endblock content %}

@@ -67,7 +67,7 @@ class PlantedTree(models.Model):
         return f"Planted Tree #{self.id}"
 
     def get_absolute_url(self):
-        return reverse('trees:planted_tree_detail', args=[self.publish.year, self.publish.month, self.publish.day, self.slug])
+        return reverse('trees:planted_tree_detail', args=[self.id,self.publish.year, self.publish.month, self.publish.day, self.slug])
 
     def clean(self):
         self.title = self.tree.name
