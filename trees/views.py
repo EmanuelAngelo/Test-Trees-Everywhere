@@ -1,52 +1,36 @@
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework import generics, permissions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from .models import PlantedTree
+from django.urls import reverse
 from .serializers import PlantedTreeSerializer
-from .forms import PlantedTreeForm
-
-@login_required
-def dashboard(request):
-    user_planted_trees = request.user.plantedtree_set.all()
-
-    context = {
-        'user_planted_trees': user_planted_trees,
-    }
-
-    return render(request, 'dashboard.html', context)
-
-def login_view(request):
-  if request.method == 'POST':
-    form = AuthenticationForm(data=request.POST)
-    if form.is_valid():
-      user = form.get_user()
-      login(request, user)
-      return redirect('trees:dashboard')
-  else:
-    form = AuthenticationForm()
-  return render(request, 'login.html', {'form':form})
+from .forms import PlantedTreeForm, LoginForm
 
 
-def my_trees(request):
-  trees = PlantedTree.objects.filter(user=request.user)
-  return render(request, 'my_trees.html', {'trees': trees})
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request,
+                                username=cd['username'],
+                                password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect(reverse('trees:planted_tree_list'))
+                else:
+                    return HttpResponse('Disabled account')
+            else:
+                return HttpResponse('Invalid login')
+    else:
+        form = LoginForm()
+    return render(request, 'account/login.html', {'form': form})
 
-
-def add_planted_tree(request):
-  if request.method == 'POST':
-    form = PlantedTreeForm(request.POST)
-    if form.is_valid():
-      planted_tree = form.save(commit=False)
-      planted_tree.user = request.user
-      planted_tree.save()
-      return redirect('my_trees')
-  else:
-    form = PlantedTreeForm()
-  return render(request, 'add_planted_tree.html', {'form': form})
 
 #testando
 @login_required
