@@ -5,8 +5,21 @@ from .models import Account, Profile, Tree, PlantedTree
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-  list_display = ('name','active','created')
-  list_filter  = ('active','created')
+    list_display = ('name', 'active', 'created')
+    list_filter = ('active', 'created')
+    actions = ['activate_acc', 'deactivate_acc']
+
+    def activate_acc(self, request, queryset):
+        queryset.update(active=True)
+        self.message_user(request, 'As contas selecionadas foram ativadas com sucesso.')
+
+    activate_acc.short_description = 'Ativar contas selecionadas'
+
+    def deactivate_acc(self, request, queryset):
+        queryset.update(active=False)
+        self.message_user(request, 'As contas selecionadas foram desativadas com sucesso.')
+
+    deactivate_acc.short_description = 'Desativar contas selecionadas'
 
 
 @admin.register(Profile)
