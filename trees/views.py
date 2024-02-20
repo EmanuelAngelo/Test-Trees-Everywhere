@@ -1,5 +1,6 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework import generics, permissions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -50,10 +51,18 @@ def add_planted_tree(request):
 #testando
 @login_required
 def planted_tree_list(request):
-  posts = PlantedTree.published.all()
+  object_list = PlantedTree.published.all()
+  paginator = Paginator(object_list, 4)
+  page = request.GET.get('page')
+  try:
+     posts = paginator.page(page)
+  except PageNotAnInteger:
+     posts = paginator.page(1)
+  except EmptyPage:
+     posts = paginator.page(paginator.num_pages)
   return render(request,
                 'tree/post/list.html',
-                {'posts':posts})
+                {'page':page, 'posts':posts})
 
 
 def planted_tree_detail(request, id, year, month, day, post):
