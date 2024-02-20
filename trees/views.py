@@ -1,3 +1,4 @@
+from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import generics, permissions
 from django.contrib.auth.decorators import login_required
@@ -56,12 +57,22 @@ def planted_tree_list(request):
 
 
 def planted_tree_detail(request, year, month, day, post):
-  post = get_object_or_404(PlantedTree, slug=post,
-                           status='published',
-                           publish__year=year,
-                           publish__month=month,
-                           publish__day=day)
-  return render(request, 'tree/post/detail.html', {'post':post})
+    try:
+        post = PlantedTree.objects.filter(
+            slug=post,
+            status='published',
+            publish__year=year,
+            publish__month=month,
+            publish__day=day
+        ).first()
+    except PlantedTree.DoesNotExist:
+        post = None
+
+    if post is None:
+        return HttpResponseNotFound("A árvore solicitada não foi encontrada.")
+
+    return render(request, 'tree/post/detail.html', {'post': post})
+
 
 
 class PlantedTreeListAPIView(generics.ListAPIView):
