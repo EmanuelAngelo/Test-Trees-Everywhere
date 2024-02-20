@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from rest_framework import generics, permissions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from .models import PlantedTree
+from .serializers import PlantedTreeSerializer
 from .forms import PlantedTreeForm
 
 @login_required
@@ -60,3 +62,11 @@ def planted_tree_detail(request, year, month, day, post):
                            publish__month=month,
                            publish__day=day)
   return render(request, 'tree/post/detail.html', {'post':post})
+
+
+class PlantedTreeListAPIView(generics.ListAPIView):
+  serializer_class = PlantedTreeSerializer
+  permission_classes = [permissions.IsAuthenticated]
+
+  def get_queryset(self):
+    return PlantedTree.objects.filter(user=self.request.user)
