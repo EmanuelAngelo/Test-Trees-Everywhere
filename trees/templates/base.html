@@ -1,20 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% endblock  %}</title>
-  <link href="{% static "css/blog.css" %}" rel="stylesheet">
-</head>
-<body>
-<div id="content">
-  {% block content %}
-  {% endblock %}
-</div>
-<div id="sidebar">
-  <h2>Arvores Plantadas</h2>
-  <p>Usuario logado: {{ request.user.first_name }}</p>
-</div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
+    <link href="{% static 'css/blog.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="content">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+    <div id="sidebar">
+      <h2>Arvores Plantadas</h2>
+      <p>Usuario logado: {{ request.user.first_name }}</p>
+    </div>
+    <div id="sidebar"></div>
+  </body>
 </html>
