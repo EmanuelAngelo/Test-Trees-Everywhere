@@ -17,9 +17,11 @@ O projeto "Trees Everywhere" visa criar uma plataforma onde os usuários podem r
 |--------------------------------------|----------------------------------------------|
 | 1. Clonar o Repositório             | `git clone https://github.com/seu-usuario/trees-everywhere.git`<br>`cd trees-everywhere` |
 | 2. Configuração do Backend          | `pip install -r requirements.txt`<br>`python manage.py migrate`<br>`python manage.py runserver` |
+| 3. Criação do super usuer           | `python manage.py createsuperuser`<br>                                                          |
 
 🚀 **Acessar o Aplicativo:**
    - Backend: [http://localhost:8000/](http://localhost:8000/)
+   - Admin: [http://localhost:8000/admin](http://localhost:8000/admin)
    - API: [http://127.0.0.1:8000/trees/api/planted-trees/](http://127.0.0.1:8000/trees/api/planted-trees/)
    - Login: [Login](http://127.0.0.1:8000/)
 
